@@ -7,6 +7,8 @@ from collections import OrderedDict
 from datetime import datetime
 from shutil import copy as copy_file
 
+from numpy import unicode
+
 '''
 12/4/18
 Suppressing writing term ref's in make.py
@@ -531,12 +533,15 @@ def write_property(pair, out_file):
     '''
 
     # write description
+    #if 'description' in pair[1]:
+    #    if isinstance(pair[1]['description'], unicode):
+    #        print("is unicode")
+    #        desc = pair[1]['description'].strip().encode("utf-8")
+    #    else:
+    #        print("is not unicode")
+    #        desc = unicode(pair[1]['description'], 'utf-8').strip().encode("utf-8")
     if 'description' in pair[1]:
-        if isinstance(pair[1]['description'], unicode):
-            desc = pair[1]['description'].strip().encode("utf-8")
-        else:
-            desc = unicode(pair[1]['description'], 'utf-8').strip().encode("utf-8")
-        desc = desc.replace('\n', '\n      ')
+        desc = pair[1]['description'].strip().encode("utf-8")
         out_file.write('    description: >\n')
         out_file.write('      %s\n' % desc)
         pair[1].pop('description')
