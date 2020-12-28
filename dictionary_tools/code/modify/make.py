@@ -16,9 +16,9 @@ class InputError(Exception):
         self.expression = expression
         self.message = message
 
-        print '\n' + self.message + '\n'
-        print json.dumps(self.expression, indent=2)
-        print ''
+        print('\n' + self.message + '\n')
+        print(json.dumps(self.expression, indent=2))
+        print('')
 
 # called in modify.create_output_path()
 def mkdir(directory):
@@ -102,7 +102,7 @@ def build_prop_entry(schema_dict, row):
         entry = {}
 
     else:
-        print 'Handle this unforeseen <field_action>! - ' + row['<field_action>'] + '\n'
+        print('Handle this unforeseen <field_action>! - ' + row['<field_action>'] + '\n')
 
     # previously was working with the notion
     # that a property could only ever have a term OR a description (exlusively one or the other)
@@ -231,7 +231,7 @@ def check_row(row, filename):
             # in the end, each property must have a term or (exclusive) description given
             # it is not an error, but it is a warning, when there is no term or description given
             if row['<description>'] == '' and row['<terms>'] == '':
-                print 'WARNING: No description or term $ref given for field - ' + row['<field>']
+                print('WARNING: No description or term $ref given for field - ' + row['<field>'])
 
         elif row['<field_action>'] == 'update':
             if set([row['<description>'], row['<type>'], row['<options_action>'], row['<options>'], row['<required>'], row['<terms>']]) == set(['']):

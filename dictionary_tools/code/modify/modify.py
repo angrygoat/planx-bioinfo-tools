@@ -149,27 +149,27 @@ def handle_node(node):
     If the node does not appear in all_changes_map, then we keep that schema
     with no changes except to populate the namespace with the value from args.
     '''
-    print '\n~~~~~ ' + node + ' ~~~~~'
+    print('\n~~~~~ ' + node + ' ~~~~~')
 
     if node in all_changes_map:
 
         if all_changes_map[node]['action'] == 'delete':
-            print 'Removing node - ' + node + '\n'
+            print('Removing node - ' + node + '\n')
             return None
 
         elif all_changes_map[node]['action'] == 'add':
-            print 'Creating node - ' + node + '\n'
+            print('Creating node - ' + node + '\n')
             make_schema(node)
 
         elif all_changes_map[node]['action'] == 'update':
-            print 'Modifying node - ' + node + '\n'
+            print('Modifying node - ' + node + '\n')
             modify_schema(node)
 
         else: # for debugging purposes
-            print '\nHey here is a problem: ' + all_changes_map[node]['action']
+            print('\nHey here is a problem: ' + all_changes_map[node]['action'])
 
     else:
-        print 'Keeping node - ' + node + '\n'
+        print('Keeping node - ' + node + '\n')
         keep_schema(node)
 
 # called in handle_node()
@@ -234,7 +234,7 @@ def modify_namespace(schema_text, schema_dict):
         schema_text = schema_text.replace(schema_dict['namespace'], args.namespace)
 
     else: # no namespace listed!
-        print '\nWARNING: No namespace listed in file - ' + schema_dict['id'] + '.yaml\n'
+        print('\nWARNING: No namespace listed in file - ' + schema_dict['id'] + '.yaml\n')
 
     return schema_text
 
@@ -248,9 +248,9 @@ def modify_properties(schema_dict):
     node = schema_dict['id']
 
     if all_changes_map[node]['variable']:
-        print ' - Updating Property List -\n'
+        print(' - Updating Property List -\n')
         for row in all_changes_map[node]['variable']:
-            print '\t' + row['<field_action>'] + ' - ' + row['<field>'] + '\n'
+            print('\t' + row['<field_action>'] + ' - ' + row['<field>'] + '\n')
 
             if row['<field_action>'] in ['add', 'update']:
                 prop_entry = make.build_prop_entry(schema_dict, row)
@@ -283,7 +283,7 @@ def modify_links(schema_text, schema_dict):
     # if there are changes to be made
     # None (False) if no changes, else it is a list containing a single row from nodes.tsv
     if all_changes_map[node]['link']:
-        print ' - Updating Links -\n'
+        print(' - Updating Links -\n')
 
         # remove old links from property list and required list if there
         schema_dict = remove_old_links(schema_dict)
@@ -569,8 +569,8 @@ def write_property(pair, out_file):
         pair[1].pop('enum')
 
     if len(pair[1]) > 0:
-        print 'WARNING: unaddressed items for this property!! - ' + pair[0]
-        print json.dumps(pair[1], indent=2)
+        print('WARNING: unaddressed items for this property!! - ' + pair[0])
+        print(json.dumps(pair[1], indent=2))
 
 if __name__ == "__main__":
 
